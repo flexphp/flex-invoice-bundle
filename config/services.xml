@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults autowire="true" autoconfigure="true"/>
+
+        <service id="flexphp.invoice.bundle" class="FlexPHP\Bundle\InvoiceBundle" />
+        <service id="FlexPHP\Bundle\InvoiceBundle" alias="flexphp.invoice.bundle" />
+
+        <!-- <service id="flexphp.invoice.bundle.invoice_controller" class="FlexPHP\Bundle\InvoiceBundle\Controller\InvoiceController" public="true" /> -->
+
+        <prototype namespace="FlexPHP\Bundle\InvoiceBundle\" resource="../src/*" exclude="../src/{DependencyInjection}">
+            <tag name="@router"/>
+        </prototype>
+    </services>
+</container>
+
