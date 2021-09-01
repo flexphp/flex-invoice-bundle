@@ -73,7 +73,7 @@ final class BillFilterFormType extends AbstractType
             'required' => false,
             'label' => 'label.orderId',
             'attr' => [
-                'data-autocomplete-url' => $this->router->generate('bills.find.orders'),
+                'data-autocomplete-url' => $this->router->generate('flexphp.invoice.bills.find.orders'),
             ],
         ]);
 
@@ -81,7 +81,7 @@ final class BillFilterFormType extends AbstractType
             'required' => false,
             'label' => 'label.provider',
             'attr' => [
-                'data-autocomplete-url' => $this->router->generate('bills.find.providers'),
+                'data-autocomplete-url' => $this->router->generate('flexphp.invoice.bills.find.providers'),
             ],
         ]);
 
@@ -89,7 +89,7 @@ final class BillFilterFormType extends AbstractType
             'required' => false,
             'label' => 'label.status',
             'attr' => [
-                'data-autocomplete-url' => $this->router->generate('bills.find.bill-status'),
+                'data-autocomplete-url' => $this->router->generate('flexphp.invoice.bills.find.bill-status'),
                 'maxlength' => 2,
             ],
         ]);
@@ -98,7 +98,7 @@ final class BillFilterFormType extends AbstractType
             'required' => false,
             'label' => 'label.type',
             'attr' => [
-                'data-autocomplete-url' => $this->router->generate('bills.find.bill-types'),
+                'data-autocomplete-url' => $this->router->generate('flexphp.invoice.bills.find.bill-types'),
                 'maxlength' => 3,
             ],
         ]);

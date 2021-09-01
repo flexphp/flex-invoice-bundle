@@ -37,7 +37,9 @@ final class ProviderController extends AbstractController
      */
     public function index(Request $request, IndexProviderUseCase $useCase): Response
     {
-        $template = $request->isXmlHttpRequest() ? 'provider/_ajax.html.twig' : 'provider/index.html.twig';
+        $template = $request->isXmlHttpRequest()
+            ? '@FlexPHPInvoice/provider/_ajax.html.twig'
+            : '@FlexPHPInvoice/provider/index.html.twig';
 
         $request = new IndexProviderRequest($request->request->all(), (int)$request->query->get('page', 1));
 
@@ -56,7 +58,7 @@ final class ProviderController extends AbstractController
     {
         $form = $this->createForm(ProviderFormType::class);
 
-        return $this->render('provider/new.html.twig', [
+        return $this->render('@FlexPHPInvoice/provider/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -75,7 +77,7 @@ final class ProviderController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.created', [], 'provider'));
 
-        return $this->redirectToRoute('providers.index');
+        return $this->redirectToRoute('flexphp.invoice.providers.index');
     }
 
     /**
@@ -92,7 +94,7 @@ final class ProviderController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('provider/show.html.twig', [
+        return $this->render('@FlexPHPInvoice/provider/show.html.twig', [
             'provider' => $response->provider,
         ]);
     }
@@ -113,7 +115,7 @@ final class ProviderController extends AbstractController
 
         $form = $this->createForm(ProviderFormType::class, $response->provider);
 
-        return $this->render('provider/edit.html.twig', [
+        return $this->render('@FlexPHPInvoice/provider/edit.html.twig', [
             'provider' => $response->provider,
             'form' => $form->createView(),
         ]);
@@ -134,7 +136,7 @@ final class ProviderController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.updated', [], 'provider'));
 
-        return $this->redirectToRoute('providers.index');
+        return $this->redirectToRoute('flexphp.invoice.providers.index');
     }
 
     /**
@@ -148,6 +150,6 @@ final class ProviderController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.deleted', [], 'provider'));
 
-        return $this->redirectToRoute('providers.index');
+        return $this->redirectToRoute('flexphp.invoice.providers.index');
     }
 }

@@ -1,0 +1,24 @@
+{% for _numeration in numerations %}
+    <tr>
+        <td>{{ _numeration.id }}</td>
+        <td>{{ _numeration.resolution }}</td>
+        <td>{{ _numeration.startAt ? _numeration.startAt|date('Y-m-d H:i:s') : '-' }}</td>
+        <td>{{ _numeration.finishAt ? _numeration.finishAt|date('Y-m-d H:i:s') : '-' }}</td>
+        <td>{{ _numeration.prefix }}</td>
+        <td>{{ _numeration.fromNumber }}</td>
+        <td>{{ _numeration.toNumber }}</td>
+        <td>{{ _numeration.currentNumber }}</td>
+        <td>{% if _numeration.isActive %}{% trans from 'messages' %}label.yes{% endtrans %}{% else %}{% trans from 'messages' %}label.no{% endtrans %}{% endif %}</td>
+        <td class="text-center">
+            <div class="btn-group">
+                <a href="{{ path('flexphp.invoice.numerations.read', {id: _numeration.id}) }}" class="btn btn-sm btn-outline-light" title="{% trans from 'messages' %}action.read{% endtrans %}">
+                    <i class="fa fa-eye text-dark" aria-hidden="true"></i>
+                </a>
+
+                <a href="{{ path('flexphp.invoice.numerations.edit', {id: _numeration.id}) }}" class="btn btn-sm btn-outline-light" title="{% trans from 'messages' %}action.edit{% endtrans %}">
+                    <i class="fa fa-edit text-info" aria-hidden="true"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+{% endfor %}

@@ -1,0 +1,50 @@
+{% trans_default_domain 'numeration' %}
+{% extends 'form/layout.html.twig' %}
+
+{% block title %}{% trans %}title.show{% endtrans %}{% endblock %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-header d-flex">
+            <h3 class="card-header-title">
+                {% trans %}entity{% endtrans %}: {{ numeration.id }}
+            </h3>
+            <div class="toolbar ml-auto">
+                <a href="{{ path('flexphp.invoice.numerations.index') }}" class="btn btn-outline-secondary">
+                    <i class="fa fa-list-ol" aria-hidden="true"></i>
+                    <span class="btn-text">{% trans from 'messages' %}action.list{% endtrans %}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="form-group"><label>{% trans %}label.resolution{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.resolution }}</div></div>
+            <div class="form-group"><label>{% trans %}label.startAt{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.startAt ? numeration.startAt|date('Y-m-d H:i:s') : '-' }}</div></div>
+            <div class="form-group"><label>{% trans %}label.finishAt{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.finishAt ? numeration.finishAt|date('Y-m-d H:i:s') : '-' }}</div></div>
+            <div class="form-group"><label>{% trans %}label.prefix{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.prefix }}</div></div>
+            <div class="form-group"><label>{% trans %}label.fromNumber{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.fromNumber }}</div></div>
+            <div class="form-group"><label>{% trans %}label.toNumber{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.toNumber }}</div></div>
+            <div class="form-group"><label>{% trans %}label.currentNumber{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.currentNumber }}</div></div>
+            <div class="form-group"><label>{% trans %}label.isActive{% endtrans %}</label><div class="form-control-plaintext">{% if numeration.isActive %}{% trans from 'messages' %}label.yes{% endtrans %}{% else %}{% trans from 'messages' %}label.no{% endtrans %}{% endif %}</div></div>
+            <div class="form-group"><label>{% trans %}label.createdAt{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.createdAt ? numeration.createdAt|date('Y-m-d H:i:s') : '-' }}</div></div>
+            <div class="form-group"><label>{% trans %}label.updatedAt{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.updatedAt ? numeration.updatedAt|date('Y-m-d H:i:s') : '-' }}</div></div>
+            <div class="form-group"><label>{% trans %}label.createdBy{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.createdByInstance.name|default('-') }}</div></div>
+            <div class="form-group"><label>{% trans %}label.updatedBy{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.updatedByInstance.name|default('-') }}</div></div>
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col">
+                    {{ include('@FlexPHPInvoice/numeration/_delete_form.html.twig', {numeration: numeration}, with_context = false) }}
+                </div>
+
+                <div class="col text-right">
+                    <a href="{{ path('flexphp.invoice.numerations.edit', {id: numeration.id}) }}" class="btn btn-outline-primary">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                        <span class="btn-text">{% trans from 'messages' %}action.edit{% endtrans %}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

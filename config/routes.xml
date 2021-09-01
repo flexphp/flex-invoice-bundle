@@ -3,6 +3,42 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <!-- <route id="flexphp.invoice.invoice.index" controller="flexphp.invoice.bundle.invoice_controller::index" path="/invoice" methods="GET" /> -->
+    <!--
+    Add routes in config/routes.yaml
+
+    flexphp_invoice_bundle_routes:
+        resource: "@FlexPHPInvoiceBundle/config/routes.xml"
+        prefix: /
+    -->
+
+    <route id="flexphp.invoice.bills.index" controller="flexphp.invoice.bundle.bill_controller::index" path="/bills" methods="GET,POST" />
+    <route id="flexphp.invoice.bills.new" controller="flexphp.invoice.bundle.bill_controller::new" path="/bills/new" methods="GET" />
+    <route id="flexphp.invoice.bills.create" controller="flexphp.invoice.bundle.bill_controller::create" path="/bills/create" methods="POST" />
+    <route id="flexphp.invoice.bills.read" controller="flexphp.invoice.bundle.bill_controller::read" path="/bills/{id}" methods="GET" />
+    <route id="flexphp.invoice.bills.edit" controller="flexphp.invoice.bundle.bill_controller::edit" path="/bills/edit/{id}" methods="GET" />
+    <route id="flexphp.invoice.bills.update" controller="flexphp.invoice.bundle.bill_controller::update" path="/bills/update/{id}" methods="PUT" />
+    <route id="flexphp.invoice.bills.delete" controller="flexphp.invoice.bundle.bill_controller::delete" path="/bills/delete/{id}" methods="DELETE" />
+    <route id="flexphp.invoice.bills.export" controller="flexphp.invoice.bundle.bill_controller::export" path="/bills/export/xlsx" methods="GET,POST" />
+    <route id="flexphp.invoice.bills.find.orders" controller="flexphp.invoice.bundle.bill_controller::findOrder" path="/bills/find-orders" methods="POST" />
+    <route id="flexphp.invoice.bills.find.providers" controller="flexphp.invoice.bundle.bill_controller::findProvider" path="/bills/find-providers" methods="POST" />
+    <route id="flexphp.invoice.bills.find.bill-status" controller="flexphp.invoice.bundle.bill_controller::findBillStatus" path="/bills/find-bill-status" methods="POST" />
+    <route id="flexphp.invoice.bills.find.bill-types" controller="flexphp.invoice.bundle.bill_controller::findBillType" path="/bills/find-bill-types" methods="POST" />
+    <route id="flexphp.invoice.bills.find.bills" controller="flexphp.invoice.bundle.bill_controller::findBill" path="/bills/find-bills" methods="POST" />
+
+    <route id="flexphp.invoice.numerations.index" controller="flexphp.invoice.bundle.numeration_controller::index" path="/numerations" methods="GET" />
+    <route id="flexphp.invoice.numerations.new" controller="flexphp.invoice.bundle.numeration_controller::new" path="/numerations/new" methods="GET" />
+    <route id="flexphp.invoice.numerations.create" controller="flexphp.invoice.bundle.numeration_controller::create" path="/numerations/create" methods="POST" />
+    <route id="flexphp.invoice.numerations.read" controller="flexphp.invoice.bundle.numeration_controller::read" path="/numerations/{id}" methods="GET" />
+    <route id="flexphp.invoice.numerations.edit" controller="flexphp.invoice.bundle.numeration_controller::edit" path="/numerations/edit/{id}" methods="GET" />
+    <route id="flexphp.invoice.numerations.update" controller="flexphp.invoice.bundle.numeration_controller::update" path="/numerations/update/{id}" methods="PUT" />
+    <route id="flexphp.invoice.numerations.delete" controller="flexphp.invoice.bundle.numeration_controller::delete" path="/numerations/delete/{id}" methods="DELETE" />
+
+    <route id="flexphp.invoice.providers.index" controller="flexphp.invoice.bundle.provider_controller::index" path="/providers" methods="GET" />
+    <route id="flexphp.invoice.providers.new" controller="flexphp.invoice.bundle.provider_controller::new" path="/providers/new" methods="GET" />
+    <route id="flexphp.invoice.providers.create" controller="flexphp.invoice.bundle.provider_controller::create" path="/providers/create" methods="POST" />
+    <route id="flexphp.invoice.providers.read" controller="flexphp.invoice.bundle.provider_controller::read" path="/providers/{id}" methods="GET" />
+    <route id="flexphp.invoice.providers.edit" controller="flexphp.invoice.bundle.provider_controller::edit" path="/providers/edit/{id}" methods="GET" />
+    <route id="flexphp.invoice.providers.update" controller="flexphp.invoice.bundle.provider_controller::update" path="/providers/update/{id}" methods="PUT" />
+    <route id="flexphp.invoice.providers.delete" controller="flexphp.invoice.bundle.provider_controller::delete" path="/providers/delete/{id}" methods="DELETE" />
 </routes>
 

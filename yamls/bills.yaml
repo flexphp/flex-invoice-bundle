@@ -1,0 +1,73 @@
+Bills:
+  Title: Bills
+  Icon: ''
+  Attributes:
+    id:
+      Name: Id
+      DataType: integer
+      Constraints: pk|ai|required
+    number:
+      Name: Number
+      DataType: string
+      Constraints: required
+    orderId:
+      Name: OrderId
+      DataType: integer
+      Constraints: 'required|fk:Orders,Id'
+    provider:
+      Name: Provider
+      DataType: string
+      Constraints: 'required|fk:Providers,Name'
+    status:
+      Name: Status
+      DataType: string
+      Constraints: 'required|fk:BillStatus,Name|maxlength:2'
+    type:
+      Name: Type
+      DataType: string
+      Constraints: 'required|fk:BillTypes,Name|maxlength:3'
+    traceId:
+      Name: TraceId
+      DataType: string
+    hash:
+      Name: Hash
+      DataType: string
+    hashType:
+      Name: HashType
+      DataType: string
+      Constraints: 'maxlength:20'
+    message:
+      Name: Message
+      DataType: string
+      Constraints: 'maxlength:1024'
+    pdfPath:
+      Name: PdfPath
+      DataType: string
+      Constraints: 'maxlength:1024'
+    xmlPath:
+      Name: XmlPath
+      DataType: string
+      Constraints: 'maxlength:1024'
+    parentId:
+      Name: ParentId
+      DataType: integer
+      Constraints: 'fk:Bills,Number'
+    downloadedAt:
+      Name: DownloadedAt
+      DataType: datetime
+    createdAt:
+      Name: CreatedAt
+      DataType: datetime
+      Constraints: ca
+    updatedAt:
+      Name: UpdatedAt
+      DataType: datetime
+      Constraints: ua
+    createdBy:
+      Name: CreatedBy
+      DataType: integer
+      Constraints: 'cb|fk:Users,Name'
+    updatedBy:
+      Name: UpdatedBy
+      DataType: integer
+      Constraints: 'ub|fk:Users,Name'

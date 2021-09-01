@@ -12,7 +12,7 @@ namespace FlexPHP\Bundle\InvoiceBundle\Domain\Bill;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\BillStatusFactory;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillType\BillTypeFactory;
 use FlexPHP\Bundle\HelperBundle\Domain\Helper\FactoryExtendedTrait;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Order\OrderFactory;
+use Domain\Order\OrderFactory;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Provider\ProviderFactory;
 use FlexPHP\Bundle\UserBundle\Domain\User\UserFactory;
 

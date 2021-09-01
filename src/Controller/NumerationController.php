@@ -35,7 +35,9 @@ final class NumerationController extends AbstractController
      */
     public function index(Request $request, IndexNumerationUseCase $useCase): Response
     {
-        $template = $request->isXmlHttpRequest() ? 'numeration/_ajax.html.twig' : 'numeration/index.html.twig';
+        $template = $request->isXmlHttpRequest()
+            ? '@FlexPHPInvoice/numeration/_ajax.html.twig'
+            : '@FlexPHPInvoice/numeration/index.html.twig';
 
         $request = new IndexNumerationRequest($request->request->all(), (int)$request->query->get('page', 1));
 
@@ -54,7 +56,7 @@ final class NumerationController extends AbstractController
     {
         $form = $this->createForm(NumerationFormType::class);
 
-        return $this->render('numeration/new.html.twig', [
+        return $this->render('@FlexPHPInvoice/numeration/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -73,7 +75,7 @@ final class NumerationController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.created', [], 'numeration'));
 
-        return $this->redirectToRoute('numerations.index');
+        return $this->redirectToRoute('flexphp.invoice.numerations.index');
     }
 
     /**
@@ -90,7 +92,7 @@ final class NumerationController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('numeration/show.html.twig', [
+        return $this->render('@FlexPHPInvoice/numeration/show.html.twig', [
             'numeration' => $response->numeration,
         ]);
     }
@@ -111,7 +113,7 @@ final class NumerationController extends AbstractController
 
         $form = $this->createForm(NumerationFormType::class, $response->numeration);
 
-        return $this->render('numeration/edit.html.twig', [
+        return $this->render('@FlexPHPInvoice/numeration/edit.html.twig', [
             'numeration' => $response->numeration,
             'form' => $form->createView(),
         ]);
@@ -132,7 +134,7 @@ final class NumerationController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.updated', [], 'numeration'));
 
-        return $this->redirectToRoute('numerations.index');
+        return $this->redirectToRoute('flexphp.invoice.numerations.index');
     }
 
     /**
@@ -146,6 +148,6 @@ final class NumerationController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.deleted', [], 'numeration'));
 
-        return $this->redirectToRoute('numerations.index');
+        return $this->redirectToRoute('flexphp.invoice.numerations.index');
     }
 }

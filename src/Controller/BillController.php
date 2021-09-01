@@ -39,16 +39,11 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/bills")
- */
 final class BillController extends AbstractController
 {
     /**
-     * @Route("/", methods={"GET","POST"}, name="bills.index")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_INDEX')", statusCode=401)
      */
@@ -56,7 +51,9 @@ final class BillController extends AbstractController
     {
         $filters = $this->getFilters($request);
 
-        $template = $request->isXmlHttpRequest() ? 'bill/_ajax.html.twig' : 'bill/index.html.twig';
+        $template = $request->isXmlHttpRequest()
+            ? '@FlexPHPInvoice/bill/_ajax.html.twig'
+            : '@FlexPHPInvoice/bill/index.html.twig';
 
         $request = new IndexBillRequest($filters, (int)$request->query->get('page', 1), 50, $this->getUser()->timezone());
 
@@ -69,7 +66,6 @@ final class BillController extends AbstractController
     }
 
     /**
-     * @Route("/new", methods={"GET"}, name="bills.new")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_CREATE')", statusCode=401)
      */
@@ -79,13 +75,12 @@ final class BillController extends AbstractController
 
         $form = $this->createForm(BillFormType::class);
 
-        return $this->render('bill/new.html.twig', [
+        return $this->render('@FlexPHPInvoice/bill/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/create", methods={"POST"}, name="bills.create")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_CREATE')", statusCode=401)
      */
     public function create(Request $request, CreateBillUseCase $useCase, TranslatorInterface $trans): Response
@@ -101,11 +96,10 @@ final class BillController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.created', [], 'bill'));
 
-        return $this->redirectToRoute('bills.index');
+        return $this->redirectToRoute('flexphp.invoice.bills.index');
     }
 
     /**
-     * @Route("/{id}", methods={"GET"}, name="bills.read")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_READ')", statusCode=401)
      */
@@ -119,13 +113,12 @@ final class BillController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('bill/show.html.twig', [
+        return $this->render('@FlexPHPInvoice/bill/show.html.twig', [
             'bill' => $response->bill,
         ]);
     }
 
     /**
-     * @Route("/edit/{id}", methods={"GET"}, name="bills.edit")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_UPDATE')", statusCode=401)
      */
@@ -143,14 +136,13 @@ final class BillController extends AbstractController
 
         $form = $this->createForm(BillFormType::class, $response->bill);
 
-        return $this->render('bill/edit.html.twig', [
+        return $this->render('@FlexPHPInvoice/bill/edit.html.twig', [
             'bill' => $response->bill,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/update/{id}", methods={"PUT"}, name="bills.update")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_UPDATE')", statusCode=401)
      */
     public function update(Request $request, UpdateBillUseCase $useCase, TranslatorInterface $trans, int $id): Response
@@ -167,11 +159,10 @@ final class BillController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.updated', [], 'bill'));
 
-        return $this->redirectToRoute('bills.index');
+        return $this->redirectToRoute('flexphp.invoice.bills.index');
     }
 
     /**
-     * @Route("/delete/{id}", methods={"DELETE"}, name="bills.delete")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_DELETE')", statusCode=401)
      */
     public function delete(DeleteBillUseCase $useCase, TranslatorInterface $trans, int $id): Response
@@ -184,11 +175,10 @@ final class BillController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.deleted', [], 'bill'));
 
-        return $this->redirectToRoute('bills.index');
+        return $this->redirectToRoute('flexphp.invoice.bills.index');
     }
 
     /**
-     * @Route("/export/xlsx", methods={"GET","POST"}, name="bills.export")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_INDEX')", statusCode=401)
      */
@@ -211,7 +201,6 @@ final class BillController extends AbstractController
     }
 
     /**
-     * @Route("/find-orders", methods={"POST"}, name="bills.find.orders")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_ORDER_INDEX')", statusCode=401)
      */
@@ -232,7 +221,6 @@ final class BillController extends AbstractController
     }
 
     /**
-     * @Route("/find-providers", methods={"POST"}, name="bills.find.providers")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PROVIDER_INDEX')", statusCode=401)
      */
@@ -253,7 +241,6 @@ final class BillController extends AbstractController
     }
 
     /**
-     * @Route("/find-bill-status", methods={"POST"}, name="bills.find.bill-status")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILLSTATUS_INDEX')", statusCode=401)
      */
@@ -274,7 +261,6 @@ final class BillController extends AbstractController
     }
 
     /**
-     * @Route("/find-bill-types", methods={"POST"}, name="bills.find.bill-types")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILLTYPE_INDEX')", statusCode=401)
      */
@@ -295,7 +281,6 @@ final class BillController extends AbstractController
     }
 
     /**
-     * @Route("/find-bills", methods={"POST"}, name="bills.find.bills")
      * @Cache(smaxage="3600")
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_INDEX')", statusCode=401)
      */
