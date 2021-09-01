@@ -40,7 +40,9 @@ final class BillTypeController extends AbstractController
      */
     public function index(Request $request, IndexBillTypeUseCase $useCase): Response
     {
-        $template = $request->isXmlHttpRequest() ? 'billType/_ajax.html.twig' : 'billType/index.html.twig';
+        $template = $request->isXmlHttpRequest()
+            ? '@FlexPHPInvoice/billType/_ajax.html.twig'
+            : '@FlexPHPInvoice/billType/index.html.twig';
 
         $request = new IndexBillTypeRequest($request->request->all(), (int)$request->query->get('page', 1));
 
@@ -60,7 +62,7 @@ final class BillTypeController extends AbstractController
     {
         $form = $this->createForm(BillTypeFormType::class);
 
-        return $this->render('billType/new.html.twig', [
+        return $this->render('@FlexPHPInvoice/billType/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -80,7 +82,7 @@ final class BillTypeController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.created', [], 'billType'));
 
-        return $this->redirectToRoute('bill-types.index');
+        return $this->redirectToRoute('flexphp.invoice.bill-types.index');
     }
 
     /**
@@ -98,7 +100,7 @@ final class BillTypeController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('billType/show.html.twig', [
+        return $this->render('@FlexPHPInvoice/billType/show.html.twig', [
             'billType' => $response->billType,
         ]);
     }
@@ -120,7 +122,7 @@ final class BillTypeController extends AbstractController
 
         $form = $this->createForm(BillTypeFormType::class, $response->billType);
 
-        return $this->render('billType/edit.html.twig', [
+        return $this->render('@FlexPHPInvoice/billType/edit.html.twig', [
             'billType' => $response->billType,
             'form' => $form->createView(),
         ]);
@@ -142,7 +144,7 @@ final class BillTypeController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.updated', [], 'billType'));
 
-        return $this->redirectToRoute('bill-types.index');
+        return $this->redirectToRoute('flexphp.invoice.bill-types.index');
     }
 
     /**
@@ -157,6 +159,6 @@ final class BillTypeController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.deleted', [], 'billType'));
 
-        return $this->redirectToRoute('bill-types.index');
+        return $this->redirectToRoute('flexphp.invoice.bill-types.index');
     }
 }

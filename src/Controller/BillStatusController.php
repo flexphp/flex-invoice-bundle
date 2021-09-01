@@ -40,7 +40,9 @@ final class BillStatusController extends AbstractController
      */
     public function index(Request $request, IndexBillStatusUseCase $useCase): Response
     {
-        $template = $request->isXmlHttpRequest() ? 'billStatus/_ajax.html.twig' : 'billStatus/index.html.twig';
+        $template = $request->isXmlHttpRequest()
+            ? '@FlexPHPInvoice/billStatus/_ajax.html.twig'
+            : '@FlexPHPInvoice/billStatus/index.html.twig';
 
         $request = new IndexBillStatusRequest($request->request->all(), (int)$request->query->get('page', 1));
 
@@ -60,7 +62,7 @@ final class BillStatusController extends AbstractController
     {
         $form = $this->createForm(BillStatusFormType::class);
 
-        return $this->render('billStatus/new.html.twig', [
+        return $this->render('@FlexPHPInvoice/billStatus/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -80,7 +82,7 @@ final class BillStatusController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.created', [], 'billStatus'));
 
-        return $this->redirectToRoute('bill-status.index');
+        return $this->redirectToRoute('flexphp.invoice.bill-status.index');
     }
 
     /**
@@ -98,7 +100,7 @@ final class BillStatusController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('billStatus/show.html.twig', [
+        return $this->render('@FlexPHPInvoice/billStatus/show.html.twig', [
             'billStatus' => $response->billStatus,
         ]);
     }
@@ -120,7 +122,7 @@ final class BillStatusController extends AbstractController
 
         $form = $this->createForm(BillStatusFormType::class, $response->billStatus);
 
-        return $this->render('billStatus/edit.html.twig', [
+        return $this->render('@FlexPHPInvoice/billStatus/edit.html.twig', [
             'billStatus' => $response->billStatus,
             'form' => $form->createView(),
         ]);
@@ -142,7 +144,7 @@ final class BillStatusController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.updated', [], 'billStatus'));
 
-        return $this->redirectToRoute('bill-status.index');
+        return $this->redirectToRoute('flexphp.invoice.bill-status.index');
     }
 
     /**
@@ -157,6 +159,6 @@ final class BillStatusController extends AbstractController
 
         $this->addFlash('success', $trans->trans('message.deleted', [], 'billStatus'));
 
-        return $this->redirectToRoute('bill-status.index');
+        return $this->redirectToRoute('flexphp.invoice.bill-status.index');
     }
 }

@@ -10,14 +10,14 @@
                 {% trans %}title.new{% endtrans %}
             </h3>
             <div class="toolbar ml-auto">
-                <a href="{{ path('bill-types.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ path('flexphp.invoice.bill-types.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-list-ol" aria-hidden="true"></i>
                     <span class="btn-text">{% trans from 'messages' %}action.list{% endtrans %}</span>
                 </a>
             </div>
         </div>
 
-        {{ form_start(form, {'action': path('bill-types.create')}) }}
+        {{ form_start(form, {'action': path('flexphp.invoice.bill-types.create')}) }}
             <div class="card-body">
                 {{ form_widget(form) }}
             </div>
@@ -33,5 +33,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/billTypes.js') }}"></script>
+    <script src="{{ asset('bundles/flexphpinvoice/js/billTypes.js') }}"></script>
 {% endblock %}

@@ -10,7 +10,7 @@
                 {% trans %}entity{% endtrans %}: {{ billType.id }}
             </h3>
             <div class="toolbar ml-auto">
-                <a href="{{ path('bill-types.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ path('flexphp.invoice.bill-types.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-list-ol" aria-hidden="true"></i>
                     <span class="btn-text">{% trans from 'messages' %}action.list{% endtrans %}</span>
                 </a>
@@ -29,11 +29,11 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    {{ include('billType/_delete_form.html.twig', {billType: billType}, with_context = false) }}
+                    {{ include('@FlexPHPInvoice/billType/_delete_form.html.twig', {billType: billType}, with_context = false) }}
                 </div>
 
                 <div class="col text-right">
-                    <a href="{{ path('bill-types.edit', {id: billType.id}) }}" class="btn btn-outline-primary">
+                    <a href="{{ path('flexphp.invoice.bill-types.edit', {id: billType.id}) }}" class="btn btn-outline-primary">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                         <span class="btn-text">{% trans from 'messages' %}action.edit{% endtrans %}</span>
                     </a>

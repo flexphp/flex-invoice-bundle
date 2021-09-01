@@ -10,14 +10,14 @@
                 {% trans %}title.edit{% endtrans %}
             </h3>
             <div class="toolbar ml-auto">
-                <a href="{{ path('bill-types.index') }}" class="btn btn-outline-secondary">
+                <a href="{{ path('flexphp.invoice.bill-types.index') }}" class="btn btn-outline-secondary">
                     <i class="fa fa-list-ol" aria-hidden="true"></i>
                     <span class="btn-text">{% trans from 'messages' %}action.list{% endtrans %}</span>
                 </a>
             </div>
         </div>
 
-        {{ form_start(form, {'action': path('bill-types.update', {id: billType.id}), 'method': 'PUT', 'attr': {'id': 'billType'}}) }}
+        {{ form_start(form, {'action': path('flexphp.invoice.bill-types.update', {id: billType.id}), 'method': 'PUT', 'attr': {'id': 'billType'}}) }}
             <div class="card-body">
                 {{ form_widget(form) }}
             </div>
@@ -26,7 +26,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    {{ include('billType/_delete_form.html.twig', {billType: billType}, with_context = false) }}
+                    {{ include('@FlexPHPInvoice/billType/_delete_form.html.twig', {billType: billType}, with_context = false) }}
                 </div>
 
                 <div class="col text-right">
@@ -41,5 +41,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/billTypes.js') }}"></script>
+    <script src="{{ asset('bundles/flexphpinvoice/js/billTypes.js') }}"></script>
 {% endblock %}

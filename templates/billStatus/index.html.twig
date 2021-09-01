@@ -10,7 +10,7 @@
                 {% trans %}title.list{% endtrans %}
             </h3>
             <div class="toolbar ml-auto">
-                <a href="{{ path('bill-status.new') }}" class="btn btn-primary">
+                <a href="{{ path('flexphp.invoice.bill-status.new') }}" class="btn btn-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <span class="btn-text">{% trans %}title.new{% endtrans %}</span>
                 </a>
@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {{ include('billStatus/_ajax.html.twig', {billStatus: billStatus}) }}
+                {{ include('@FlexPHPInvoice/billStatus/_ajax.html.twig', {billStatus: billStatus}) }}
                 </tbody>
             </table>
             {{ include('default/_infinite.html.twig') }}
