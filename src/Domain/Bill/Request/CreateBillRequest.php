@@ -13,6 +13,8 @@ use FlexPHP\Messages\RequestInterface;
 
 final class CreateBillRequest implements RequestInterface
 {
+    public $prefix;
+
     public $number;
 
     public $orderId;
@@ -43,6 +45,7 @@ final class CreateBillRequest implements RequestInterface
 
     public function __construct(array $data, int $createdBy)
     {
+        $this->prefix = $data['prefix'] ?? null;
         $this->number = $data['number'] ?? null;
         $this->orderId = $data['orderId'] ?? null;
         $this->provider = $data['provider'] ?? null;

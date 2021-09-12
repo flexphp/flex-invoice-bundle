@@ -15,6 +15,8 @@ final class UpdateBillRequest implements RequestInterface
 {
     public $id;
 
+    public $prefix;
+
     public $number;
 
     public $orderId;
@@ -46,6 +48,7 @@ final class UpdateBillRequest implements RequestInterface
     public function __construct(int $id, array $data, int $updatedBy)
     {
         $this->id = $id;
+        $this->prefix = $data['prefix'] ?? null;
         $this->number = $data['number'] ?? null;
         $this->orderId = $data['orderId'] ?? null;
         $this->provider = $data['provider'] ?? null;

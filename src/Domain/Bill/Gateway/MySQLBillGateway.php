@@ -350,7 +350,7 @@ class MySQLBillGateway implements BillGateway
 
     private function addNumerationFilter($criteria, string $numeration): void
     {
-        \preg_match_all('/([A-Z]*)([0-9]*)/', $numeration, $matches);
+        \preg_match_all('/([A-Z-_]*)([0-9]*)/', $numeration, $matches);
 
         $prefix = $matches[1][0] ?? null;
         $number = $matches[2][0] ?? null;
