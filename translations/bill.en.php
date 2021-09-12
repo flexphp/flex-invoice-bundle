@@ -10,6 +10,8 @@ return [
     ],
     'label' => [
         'id' => 'Id',
+        'numeration' => 'Numeration',
+        'prefix' => 'Prefix',
         'number' => 'Number',
         'orderId' => 'Order Id',
         'provider' => 'Provider',

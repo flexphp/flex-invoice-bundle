@@ -32,8 +32,12 @@ final class BillFactory
             $bill->setId((int)$data['id']);
         }
 
+        if (isset($data['prefix'])) {
+            $bill->setPrefix((string)$data['prefix']);
+        }
+
         if (isset($data['number'])) {
-            $bill->setNumber((string)$data['number']);
+            $bill->setNumber((int)$data['number']);
         }
 
         if (isset($data['orderId'])) {

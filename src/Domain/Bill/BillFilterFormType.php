@@ -64,9 +64,9 @@ final class BillFilterFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('number', InputType\TextType::class, [
+        $builder->add('numeration', InputType\TextType::class, [
             'required' => false,
-            'label' => 'label.number',
+            'label' => 'label.numeration',
         ]);
 
         $builder->add('orderId', Select2Type::class, [

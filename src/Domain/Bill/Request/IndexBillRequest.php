@@ -18,7 +18,7 @@ final class IndexBillRequest implements RequestInterface
 
     public $id;
 
-    public $number;
+    public $numeration;
 
     public $orderId;
 
@@ -61,7 +61,7 @@ final class IndexBillRequest implements RequestInterface
     public function __construct(array $data, int $_page, int $_limit = 50, ?string $timezone = null)
     {
         $this->id = $data['id'] ?? null;
-        $this->number = $data['number'] ?? null;
+        $this->numeration = $data['numeration'] ?? null;
         $this->orderId = $data['orderId'] ?? null;
         $this->provider = $data['provider'] ?? null;
         $this->status = $data['status'] ?? null;

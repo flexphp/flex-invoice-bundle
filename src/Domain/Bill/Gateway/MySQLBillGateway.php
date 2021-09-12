@@ -11,6 +11,7 @@ namespace FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Gateway;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Types as DB;
+use FlexPHP\Bundle\HelperBundle\Domain\Helper\DbalCriteriaHelper;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Bill;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\BillGateway;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\FindBillBillRequest;
@@ -18,14 +19,14 @@ use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\FindBillBillStatusRequest;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\FindBillBillTypeRequest;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\FindBillOrderRequest;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\FindBillProviderRequest;
-use FlexPHP\Bundle\HelperBundle\Domain\Helper\DbalCriteriaHelper;
 
 class MySQLBillGateway implements BillGateway
 {
     private $conn;
 
     private $operator = [
-        //
+        'prefix' => DbalCriteriaHelper::OP_CONTAINS,
+        'number' => DbalCriteriaHelper::OP_CONTAINS,
     ];
 
     public function __construct(Connection $conn)
@@ -39,6 +40,7 @@ class MySQLBillGateway implements BillGateway
 
         $query->select([
             'bill.Id as id',
+            'bill.Prefix as prefix',
             'bill.Number as number',
             'bill.OrderId as orderId',
             'bill.Provider as provider',
@@ -62,6 +64,7 @@ class MySQLBillGateway implements BillGateway
             'type.id as `type.id`',
             'type.name as `type.name`',
             'parentId.id as `parentId.id`',
+            'parentId.prefix as `parentId.prefix`',
             'parentId.number as `parentId.number`',
         ]);
         $query->from('`Bills`', '`bill`');
@@ -76,6 +79,12 @@ class MySQLBillGateway implements BillGateway
         $criteria = new DbalCriteriaHelper($query, $offset);
 
         foreach ($wheres as $column => $value) {
+            if ($column === 'numeration' && $value) {
+                $this->addNumerationFilter($criteria, $value);
+
+                continue;
+            }
+
             $criteria->getCriteria('bill', $column, $value, $this->operator[$column] ?? DbalCriteriaHelper::OP_EQUALS);
         }
 
@@ -91,6 +100,7 @@ class MySQLBillGateway implements BillGateway
 
         $query->insert('`Bills`');
 
+        $query->setValue('Prefix', ':prefix');
         $query->setValue('Number', ':number');
         $query->setValue('OrderId', ':orderId');
         $query->setValue('Provider', ':provider');
@@ -108,6 +118,7 @@ class MySQLBillGateway implements BillGateway
         $query->setValue('UpdatedAt', ':updatedAt');
         $query->setValue('CreatedBy', ':createdBy');
 
+        $query->setParameter(':prefix', $bill->prefix(), DB::STRING);
         $query->setParameter(':number', $bill->number(), DB::STRING);
         $query->setParameter(':orderId', $bill->orderId(), DB::INTEGER);
         $query->setParameter(':provider', $bill->provider(), DB::STRING);
@@ -121,8 +132,8 @@ class MySQLBillGateway implements BillGateway
         $query->setParameter(':xmlPath', $bill->xmlPath(), DB::STRING);
         $query->setParameter(':parentId', $bill->parentId(), DB::INTEGER);
         $query->setParameter(':downloadedAt', $bill->downloadedAt(), DB::DATETIME_MUTABLE);
-        $query->setParameter(':createdAt', $bill->createdAt() ?? new \DateTime(date('Y-m-d H:i:s')), DB::DATETIME_MUTABLE);
-        $query->setParameter(':updatedAt', $bill->updatedAt() ?? new \DateTime(date('Y-m-d H:i:s')), DB::DATETIME_MUTABLE);
+        $query->setParameter(':createdAt', $bill->createdAt() ?? new \DateTime(\date('Y-m-d H:i:s')), DB::DATETIME_MUTABLE);
+        $query->setParameter(':updatedAt', $bill->updatedAt() ?? new \DateTime(\date('Y-m-d H:i:s')), DB::DATETIME_MUTABLE);
         $query->setParameter(':createdBy', $bill->createdBy(), DB::INTEGER);
 
         $query->execute();
@@ -136,6 +147,7 @@ class MySQLBillGateway implements BillGateway
 
         $query->select([
             'bill.Id as id',
+            'bill.Prefix as prefix',
             'bill.Number as number',
             'bill.OrderId as orderId',
             'bill.Provider as provider',
@@ -162,6 +174,7 @@ class MySQLBillGateway implements BillGateway
             'type.id as `type.id`',
             'type.name as `type.name`',
             'parentId.id as `parentId.id`',
+            'parentId.prefix as `parentId.prefix`',
             'parentId.number as `parentId.number`',
             'createdBy.id as `createdBy.id`',
             'createdBy.name as `createdBy.name`',
@@ -188,6 +201,7 @@ class MySQLBillGateway implements BillGateway
 
         $query->update('`Bills`');
 
+        $query->set('Prefix', ':prefix');
         $query->set('Number', ':number');
         $query->set('OrderId', ':orderId');
         $query->set('Provider', ':provider');
@@ -204,6 +218,7 @@ class MySQLBillGateway implements BillGateway
         $query->set('UpdatedAt', ':updatedAt');
         $query->set('UpdatedBy', ':updatedBy');
 
+        $query->setParameter(':prefix', $bill->prefix(), DB::STRING);
         $query->setParameter(':number', $bill->number(), DB::STRING);
         $query->setParameter(':orderId', $bill->orderId(), DB::INTEGER);
         $query->setParameter(':provider', $bill->provider(), DB::STRING);
@@ -217,7 +232,7 @@ class MySQLBillGateway implements BillGateway
         $query->setParameter(':xmlPath', $bill->xmlPath(), DB::STRING);
         $query->setParameter(':parentId', $bill->parentId(), DB::INTEGER);
         $query->setParameter(':downloadedAt', $bill->downloadedAt(), DB::DATETIME_MUTABLE);
-        $query->setParameter(':updatedAt', $bill->updatedAt() ?? new \DateTime(date('Y-m-d H:i:s')), DB::DATETIME_MUTABLE);
+        $query->setParameter(':updatedAt', $bill->updatedAt() ?? new \DateTime(\date('Y-m-d H:i:s')), DB::DATETIME_MUTABLE);
         $query->setParameter(':updatedBy', $bill->updatedBy(), DB::INTEGER);
 
         $query->where('Id = :id');
@@ -320,16 +335,32 @@ class MySQLBillGateway implements BillGateway
 
         $query->select([
             'bill.id as id',
-            'bill.number as text',
+            'CONCAT(bill.prefix, bill.number) as text',
         ]);
         $query->from('`Bills`', '`bill`');
 
-        $query->where('bill.number like :bill_number');
+        $query->where('CONCAT(bill.prefix, bill.number) like :bill_number');
         $query->setParameter(':bill_number', "%{$request->term}%");
 
         $query->setFirstResult($page ? ($page - 1) * $limit : 0);
         $query->setMaxResults($limit);
 
         return $query->execute()->fetchAll();
+    }
+
+    private function addNumerationFilter($criteria, string $numeration): void
+    {
+        \preg_match_all('/([A-Z]*)([0-9]*)/', $numeration, $matches);
+
+        $prefix = $matches[1][0] ?? null;
+        $number = $matches[2][0] ?? null;
+
+        if ($prefix) {
+            $criteria->getCriteria('bill', 'prefix', $prefix, $this->operator['prefix'] ?? DbalCriteriaHelper::OP_EQUALS);
+        }
+
+        if ($number) {
+            $criteria->getCriteria('bill', 'number', $number, $this->operator['number'] ?? DbalCriteriaHelper::OP_EQUALS);
+        }
     }
 }

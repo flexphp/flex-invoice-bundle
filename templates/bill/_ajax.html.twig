@@ -1,7 +1,7 @@
 {% for _bill in bills %}
     <tr>
         <td>{{ _bill.id }}</td>
-        <td>{{ _bill.number }}</td>
+        <td>{{ _bill.prefix }}{{ _bill.number }}</td>
         <td>{{ _bill.orderIdInstance.id|default('-') }}</td>
         <td>{{ _bill.providerInstance.name|default('-') }}</td>
         <td>{{ _bill.statusInstance.name|default('-') }}</td>

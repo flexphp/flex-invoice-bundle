@@ -9,10 +9,10 @@
  */
 namespace FlexPHP\Bundle\InvoiceBundle\Domain\Bill;
 
+use Domain\Order\Order;
+use FlexPHP\Bundle\HelperBundle\Domain\Helper\ToArrayTrait;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\BillStatus;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillType\BillType;
-use FlexPHP\Bundle\HelperBundle\Domain\Helper\ToArrayTrait;
-use Domain\Order\Order;
 use FlexPHP\Bundle\InvoiceBundle\Domain\Provider\Provider;
 use FlexPHP\Bundle\UserBundle\Domain\User\User;
 
@@ -21,6 +21,8 @@ final class Bill
     use ToArrayTrait;
 
     private $id;
+
+    private $prefix;
 
     private $number;
 
@@ -75,7 +77,12 @@ final class Bill
         return $this->id;
     }
 
-    public function number(): ?string
+    public function prefix(): ?string
+    {
+        return $this->prefix;
+    }
+
+    public function number(): ?int
     {
         return $this->number;
     }
@@ -200,7 +207,12 @@ final class Bill
         $this->id = $id;
     }
 
-    public function setNumber(string $number): void
+    public function setPrefix(string $prefix): void
+    {
+        $this->prefix = $prefix;
+    }
+
+    public function setNumber(int $number): void
     {
         $this->number = $number;
     }
@@ -318,5 +330,10 @@ final class Bill
     public function setUpdatedByInstance(?User $user): void
     {
         $this->updatedByInstance = $user;
+    }
+
+    public function getNumeration(): string
+    {
+        return $this->prefix() . $this->number();
     }
 }
