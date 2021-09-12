@@ -1,6 +1,7 @@
 {% for _numeration in numerations %}
     <tr>
         <td>{{ _numeration.id }}</td>
+        <td>{{ _numeration.type }}</td>
         <td>{{ _numeration.resolution }}</td>
         <td>{{ _numeration.startAt ? _numeration.startAt|date('Y-m-d H:i:s') : '-' }}</td>
         <td>{{ _numeration.finishAt ? _numeration.finishAt|date('Y-m-d H:i:s') : '-' }}</td>
