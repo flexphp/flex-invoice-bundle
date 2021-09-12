@@ -38,6 +38,7 @@ final class UpdateNumerationRequest implements RequestInterface
     public function __construct(int $id, array $data, int $updatedBy, bool $_patch = false)
     {
         $this->id = $id;
+        $this->type = $data['type'] ?? null;
         $this->resolution = $data['resolution'] ?? null;
         $this->startAt = $data['startAt'] ?? null;
         $this->finishAt = $data['finishAt'] ?? null;

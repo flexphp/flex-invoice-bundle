@@ -28,6 +28,10 @@ final class NumerationFactory
             $numeration->setId((int)$data['id']);
         }
 
+        if (isset($data['type'])) {
+            $numeration->setType((string)$data['type']);
+        }
+
         if (isset($data['resolution'])) {
             $numeration->setResolution((string)$data['resolution']);
         }

@@ -34,6 +34,7 @@ class MySQLNumerationGateway implements NumerationGateway
 
         $query->select([
             'numeration.Id as id',
+            'numeration.Type as type',
             'numeration.Resolution as resolution',
             'numeration.StartAt as startAt',
             'numeration.FinishAt as finishAt',
@@ -65,6 +66,7 @@ class MySQLNumerationGateway implements NumerationGateway
 
         $query->insert('`Numerations`');
 
+        $query->setValue('Type', ':type');
         $query->setValue('Resolution', ':resolution');
         $query->setValue('StartAt', ':startAt');
         $query->setValue('FinishAt', ':finishAt');
@@ -77,6 +79,7 @@ class MySQLNumerationGateway implements NumerationGateway
         $query->setValue('UpdatedAt', ':updatedAt');
         $query->setValue('CreatedBy', ':createdBy');
 
+        $query->setParameter(':type', $numeration->type(), DB::STRING);
         $query->setParameter(':resolution', $numeration->resolution(), DB::STRING);
         $query->setParameter(':startAt', $numeration->startAt(), DB::DATE_MUTABLE);
         $query->setParameter(':finishAt', $numeration->finishAt(), DB::DATE_MUTABLE);
@@ -100,6 +103,7 @@ class MySQLNumerationGateway implements NumerationGateway
 
         $query->select([
             'numeration.Id as id',
+            'numeration.Type as type',
             'numeration.Resolution as resolution',
             'numeration.StartAt as startAt',
             'numeration.FinishAt as finishAt',
@@ -132,6 +136,7 @@ class MySQLNumerationGateway implements NumerationGateway
 
         $query->update('`Numerations`');
 
+        $query->set('Type', ':type');
         $query->set('Resolution', ':resolution');
         $query->set('StartAt', ':startAt');
         $query->set('FinishAt', ':finishAt');
@@ -143,6 +148,7 @@ class MySQLNumerationGateway implements NumerationGateway
         $query->set('UpdatedAt', ':updatedAt');
         $query->set('UpdatedBy', ':updatedBy');
 
+        $query->setParameter(':type', $numeration->type(), DB::STRING);
         $query->setParameter(':resolution', $numeration->resolution(), DB::STRING);
         $query->setParameter(':startAt', $numeration->startAt(), DB::DATE_MUTABLE);
         $query->setParameter(':finishAt', $numeration->finishAt(), DB::DATE_MUTABLE);

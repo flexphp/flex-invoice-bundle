@@ -18,6 +18,8 @@ final class Numeration
 
     private $id;
 
+    private $type;
+
     private $resolution;
 
     private $startAt;
@@ -49,6 +51,11 @@ final class Numeration
     public function id(): ?int
     {
         return $this->id;
+    }
+
+    public function type(): string
+    {
+        return $this->type;
     }
 
     public function resolution(): ?string
@@ -124,6 +131,11 @@ final class Numeration
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 
     public function setResolution(string $resolution): void

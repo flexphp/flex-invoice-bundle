@@ -33,6 +33,7 @@ final class CreateNumerationRequest implements RequestInterface
 
     public function __construct(array $data, int $createdBy)
     {
+        $this->type = $data['type'] ?? null;
         $this->resolution = $data['resolution'] ?? null;
         $this->startAt = $data['startAt'] ?? null;
         $this->finishAt = $data['finishAt'] ?? null;
