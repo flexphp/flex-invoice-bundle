@@ -81,8 +81,8 @@ class MySQLNumerationGateway implements NumerationGateway
 
         $query->setParameter(':type', $numeration->type(), DB::STRING);
         $query->setParameter(':resolution', $numeration->resolution(), DB::STRING);
-        $query->setParameter(':startAt', $numeration->startAt(), DB::DATE_MUTABLE);
-        $query->setParameter(':finishAt', $numeration->finishAt(), DB::DATE_MUTABLE);
+        $query->setParameter(':startAt', $numeration->startAt(), DB::DATETIME_MUTABLE);
+        $query->setParameter(':finishAt', $numeration->finishAt(), DB::DATETIME_MUTABLE);
         $query->setParameter(':prefix', $numeration->prefix(), DB::STRING);
         $query->setParameter(':fromNumber', $numeration->fromNumber(), DB::INTEGER);
         $query->setParameter(':toNumber', $numeration->toNumber(), DB::INTEGER);
@@ -150,8 +150,8 @@ class MySQLNumerationGateway implements NumerationGateway
 
         $query->setParameter(':type', $numeration->type(), DB::STRING);
         $query->setParameter(':resolution', $numeration->resolution(), DB::STRING);
-        $query->setParameter(':startAt', $numeration->startAt(), DB::DATE_MUTABLE);
-        $query->setParameter(':finishAt', $numeration->finishAt(), DB::DATE_MUTABLE);
+        $query->setParameter(':startAt', $numeration->startAt(), DB::DATETIME_MUTABLE);
+        $query->setParameter(':finishAt', $numeration->finishAt(), DB::DATETIME_MUTABLE);
         $query->setParameter(':prefix', $numeration->prefix(), DB::STRING);
         $query->setParameter(':fromNumber', $numeration->fromNumber(), DB::INTEGER);
         $query->setParameter(':toNumber', $numeration->toNumber(), DB::INTEGER);

@@ -69,7 +69,7 @@ final class NumerationController extends AbstractController
         $form = $this->createForm(NumerationFormType::class);
         $form->handleRequest($request);
 
-        $request = new CreateNumerationRequest($form->getData(), $this->getUser()->id());
+        $request = new CreateNumerationRequest($form->getData(), $this->getUser()->id(), $this->getUser()->timezone());
 
         $useCase->execute($request);
 
@@ -128,7 +128,7 @@ final class NumerationController extends AbstractController
         $form->submit($request->request->get($form->getName()));
         $form->handleRequest($request);
 
-        $request = new UpdateNumerationRequest($id, $form->getData(), $this->getUser()->id());
+        $request = new UpdateNumerationRequest($id, $form->getData(), $this->getUser()->id(), false, $this->getUser()->timezone());
 
         $useCase->execute($request);
 

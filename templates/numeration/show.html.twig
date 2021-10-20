@@ -20,8 +20,8 @@
         <div class="card-body">
             <div class="form-group"><label>{% trans %}label.type{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.type }}</div></div>
             <div class="form-group"><label>{% trans %}label.resolution{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.resolution }}</div></div>
-            <div class="form-group"><label>{% trans %}label.startAt{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.startAt ? numeration.startAt|date('Y-m-d H:i:s') : '-' }}</div></div>
-            <div class="form-group"><label>{% trans %}label.finishAt{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.finishAt ? numeration.finishAt|date('Y-m-d H:i:s') : '-' }}</div></div>
+            <div class="form-group"><label>{% trans %}label.startAt{% endtrans %}</label><div class="form-control-plaintext date-format">{{ numeration.startAt ? numeration.startAt|date('Y-m-d H:i:s') : '-' }}</div></div>
+            <div class="form-group"><label>{% trans %}label.finishAt{% endtrans %}</label><div class="form-control-plaintext date-format">{{ numeration.finishAt ? numeration.finishAt|date('Y-m-d H:i:s') : '-' }}</div></div>
             <div class="form-group"><label>{% trans %}label.prefix{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.prefix }}</div></div>
             <div class="form-group"><label>{% trans %}label.fromNumber{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.fromNumber }}</div></div>
             <div class="form-group"><label>{% trans %}label.toNumber{% endtrans %}</label><div class="form-control-plaintext">{{ numeration.toNumber }}</div></div>

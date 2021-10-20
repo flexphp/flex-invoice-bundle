@@ -18,6 +18,8 @@ final class IndexNumerationRequest implements RequestInterface
 
     public $id;
 
+    public $type;
+
     public $resolution;
 
     public $startAt;
@@ -51,6 +53,7 @@ final class IndexNumerationRequest implements RequestInterface
     public function __construct(array $data, int $_page, int $_limit = 50, ?string $timezone = null)
     {
         $this->id = $data['id'] ?? null;
+        $this->type = $data['type'] ?? null;
         $this->resolution = $data['resolution'] ?? null;
         $this->startAt = $data['startAt'] ?? null;
         $this->finishAt = $data['finishAt'] ?? null;
