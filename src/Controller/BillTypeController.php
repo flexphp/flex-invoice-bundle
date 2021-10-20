@@ -28,9 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/bill-types")
- */
 final class BillTypeController extends AbstractController
 {
     /**

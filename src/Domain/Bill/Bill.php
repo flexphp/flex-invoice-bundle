@@ -9,6 +9,7 @@
  */
 namespace FlexPHP\Bundle\InvoiceBundle\Domain\Bill;
 
+use DateTime;
 use Domain\Order\Order;
 use FlexPHP\Bundle\HelperBundle\Domain\Helper\ToArrayTrait;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\BillStatus;
@@ -71,6 +72,8 @@ final class Bill
     private $createdByInstance;
 
     private $updatedByInstance;
+
+    private ?Bill $debitInstance = null;
 
     public function id(): ?int
     {
@@ -335,5 +338,37 @@ final class Bill
     public function getNumeration(): string
     {
         return $this->prefix() . $this->number();
+    }
+
+    public function debitInstance(): ?self
+    {
+        return $this->debitInstance;
+    }
+
+    public function setDebitInstance(?self $debitInstance): void
+    {
+        $this->debitInstance = $debitInstance;
+    }
+
+    public function withLastDebit(BillGateway $billGateway, int $offset): self
+    {
+        if ($this->id() && !$this->debitInstance) {
+            $debits = $billGateway->search([
+                'parentId' => $this->id(),
+                'type' => BillType::DEBIT,
+            ], [], 1, 1, $offset);
+
+            $this->setDebitInstance((\count($debits) > 0 ? (new BillFactory)->make($debits[0]) : null));
+        }
+
+        return $this;
+    }
+
+    public function hasDebitEnabled(): bool
+    {
+        return $this->type() === BillType::INVOICE
+            && $this->orderIdInstance()->createdAt() >= new DateTime(\date('Y-m-01 00:00:00'))
+            // && $this->debitInstance() === null
+            ;
     }
 }

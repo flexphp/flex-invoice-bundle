@@ -34,8 +34,11 @@ final class BillRepository
      */
     public function findBy(IndexBillRequest $request): array
     {
-        return \array_map(function (array $bill) {
-            return (new BillFactory())->make($bill);
+        return \array_map(function (array $bill) use ($request) {
+            $bill = (new BillFactory())->make($bill);
+            // $bill->withLastDebit($this->gateway, $request->_offset);
+
+            return $bill;
         }, $this->gateway->search((array)$request, [], $request->_page, $request->_limit, $request->_offset));
     }
 
@@ -53,7 +56,10 @@ final class BillRepository
         $factory = new BillFactory();
         $data = $this->gateway->get($factory->make($request));
 
-        return $factory->make($data);
+        $bill = $factory->make($data);
+        // $bill->withLastDebit($this->gateway, 0);
+
+        return $bill;
     }
 
     public function change(UpdateBillRequest $request): Bill
@@ -100,5 +106,10 @@ final class BillRepository
     public function findBillsBy(FindBillBillRequest $request): array
     {
         return $this->gateway->filterBills($request, $request->_page, $request->_limit);
+    }
+
+    public function gateway(): BillGateway
+    {
+        return $this->gateway;
     }
 }
