@@ -1,0 +1,11 @@
+{% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_BILL_CREATE')) and bill.hasDebitEnabled %}
+{{ include('form/_action_confirmation.html.twig', {message: '__bill.requestNd'|trans([], 'order')}) }}
+{% set _confirmation = bill.debitInstance and bill.debitInstance.downloadedAt ? '' : 'data-confirmation="true"' %}
+{% set _style = style|default('') %}
+    <form class="d-inline" id="get-debit-{{ bill.id }}" name="get-debit-{{ bill.id }}" method="get" action="{{ path('orders.einvoice-nd', {id: bill.orderId, billId: bill.id}) }}" {{ _confirmation }}>
+        <button type="submit" class="btn {{ _style }} btn-outline-warning" tabindex="-1" title="{{ (not _style) ? '' : '__bill.einvoice'|trans([], 'order') }}">
+            <i class="fa fa-file-medical-alt" aria-hidden="true"></i>
+            <span class="btn-text">{{ (not _style) ? '__bill.einvoiceNd'|trans([], 'order') }}</span>
+        </button>
+    </form>
+{% endif %}

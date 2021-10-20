@@ -36,7 +36,7 @@ final class BillRepository
     {
         return \array_map(function (array $bill) use ($request) {
             $bill = (new BillFactory())->make($bill);
-            // $bill->withLastDebit($this->gateway, $request->_offset);
+            $bill->withLastDebit($this->gateway, $request->_offset);
 
             return $bill;
         }, $this->gateway->search((array)$request, [], $request->_page, $request->_limit, $request->_offset));

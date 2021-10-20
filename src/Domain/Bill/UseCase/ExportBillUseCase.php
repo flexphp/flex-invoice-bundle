@@ -136,10 +136,10 @@ final class ExportBillUseCase
 
     public function getResolution(array $numerations, string $prefix): Numeration
     {
-        $numerations = \array_filter($numerations, function (Numeration $numeration) use ($prefix) {
+        $numerations = \array_values(\array_filter($numerations, function (Numeration $numeration) use ($prefix) {
             return $numeration->prefix() === $prefix;
-        });
+        }));
 
-        return \end($numerations);
+        return $numerations[0] ?? new Numeration;
     }
 }

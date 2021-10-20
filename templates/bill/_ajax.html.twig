@@ -15,11 +15,7 @@
                     <i class="fa fa-eye text-dark" aria-hidden="true"></i>
                 </a>
 
-                {% if _bill.hasDebitEnabled %}
-                    <a href="{{ path('orders.einvoice-nd', {id: _bill.orderId, billId: _bill.id}) }}" class="btn btn-sm btn-outline-warning" title="{% trans from 'order' %}__bill.einvoiceNd{% endtrans %}">
-                        <i class="fa fa-file-medical-alt text-warning" aria-hidden="true"></i>
-                    </a>
-                {% endif %}
+                {{ include('@FlexPHPInvoice/bill/_get_debit_button.html.twig', {bill: _bill, style: 'btn-sm'}, with_context = false) }}
 
                 {# <a href="{{ path('flexphp.invoice.bills.edit', {id: _bill.id}) }}" class="btn btn-sm btn-outline-light" title="{% trans from 'messages' %}action.edit{% endtrans %}"> #}
                     {# <i class="fa fa-edit text-info" aria-hidden="true"></i> #}
