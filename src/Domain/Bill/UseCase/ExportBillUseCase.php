@@ -9,17 +9,18 @@
  */
 namespace FlexPHP\Bundle\InvoiceBundle\Domain\Bill\UseCase;
 
-use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\BillRepository;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\IndexBillRequest;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Response\ExportBillResponse;
 use Domain\Customer\CustomerRepository;
 use Domain\Customer\Request\ReadCustomerRequest;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Numeration\NumerationRepository;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Numeration\Request\IndexNumerationRequest;
 use Domain\Order\OrderRepository;
 use Domain\Order\Request\ReadOrderRequest;
 use Domain\OrderDetail\OrderDetailRepository;
 use Domain\OrderDetail\Request\IndexOrderDetailRequest;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\BillRepository;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\IndexBillRequest;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Response\ExportBillResponse;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Numeration\Numeration;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Numeration\NumerationRepository;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Numeration\Request\IndexNumerationRequest;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -54,9 +55,9 @@ final class ExportBillUseCase
     {
         $bills = $this->billRepository->findBy($request);
 
-        $numeration = $this->numerationRepository->findBy(new IndexNumerationRequest([
+        $numerations = $this->numerationRepository->findBy(new IndexNumerationRequest([
             'isActive' => true,
-        ], 1))[0];
+        ], 1));
 
         $spreadsheet = new Spreadsheet();
 
@@ -87,14 +88,15 @@ final class ExportBillUseCase
         foreach ($bills as $bill) {
             $order = $this->orderRepository->getById(new ReadOrderRequest($bill->orderId()));
             $customer = $this->customerRepository->getById(new ReadCustomerRequest($order->customerId()));
+            $numeration = $this->getResolution($numerations, $bill->prefix());
             $orderDetails = $this->orderDetailRepository->findBy(new IndexOrderDetailRequest([
                 'orderId' => $order->id(),
             ], 1, 500));
 
             foreach ($orderDetails as $orderDetail) {
                 $sheet->setCellValue('A' . $column, $bill->typeInstance()->name());
-                $sheet->setCellValueExplicit('B' . $column, $numeration->prefix(), DataType::TYPE_STRING);
-                $sheet->setCellValueExplicit('C' . $column, \str_replace($numeration->prefix(), '', $bill->number()), DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('B' . $column, $bill->prefix(), DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('C' . $column, $bill->number(), DataType::TYPE_STRING);
                 $sheet->setCellValueExplicit('D' . $column, ($bill->createdAt() ? $bill->createdAt()->format('Y-m-d') : ''), DataType::TYPE_STRING);
                 $sheet->setCellValueExplicit('E' . $column, ($bill->createdAt() ? $bill->createdAt()->format('H:i:s') : ''), DataType::TYPE_STRING);
                 $sheet->setCellValueExplicit('F' . $column, $customer->documentNumber(), DataType::TYPE_STRING);
@@ -130,5 +132,14 @@ final class ExportBillUseCase
         $writer->save($path);
 
         return new ExportBillResponse($path, $filename, $contentType);
+    }
+
+    public function getResolution(array $numerations, string $prefix): Numeration
+    {
+        $numerations = \array_filter($numerations, function (Numeration $numeration) use ($prefix) {
+            return $numeration->prefix() === $prefix;
+        });
+
+        return \end($numerations);
     }
 }
