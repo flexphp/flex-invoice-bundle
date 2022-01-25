@@ -14,7 +14,7 @@ use Domain\Order\Order;
 use FlexPHP\Bundle\HelperBundle\Domain\Helper\ToArrayTrait;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\BillStatus;
 use FlexPHP\Bundle\InvoiceBundle\Domain\BillType\BillType;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Provider\Provider;
+use FlexPHP\Bundle\NumerationBundle\Domain\Provider\Provider;
 use FlexPHP\Bundle\UserBundle\Domain\User\User;
 
 final class Bill

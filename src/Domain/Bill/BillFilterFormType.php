@@ -11,24 +11,15 @@ namespace FlexPHP\Bundle\InvoiceBundle\Domain\Bill;
 
 use App\Form\Type\DatefinishpickerType;
 use App\Form\Type\DatestartpickerType;
-use App\Form\Type\DatetimepickerType;
 use App\Form\Type\Select2Type;
-use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\Request\ReadBillStatusRequest;
-use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\UseCase\ReadBillStatusUseCase;
-use FlexPHP\Bundle\InvoiceBundle\Domain\BillType\Request\ReadBillTypeRequest;
-use FlexPHP\Bundle\InvoiceBundle\Domain\BillType\UseCase\ReadBillTypeUseCase;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\Request\ReadBillRequest;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\UseCase\ReadBillUseCase;
-use Domain\Order\Request\ReadOrderRequest;
 use Domain\Order\UseCase\ReadOrderUseCase;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Provider\Request\ReadProviderRequest;
-use FlexPHP\Bundle\InvoiceBundle\Domain\Provider\UseCase\ReadProviderUseCase;
+use FlexPHP\Bundle\InvoiceBundle\Domain\Bill\UseCase\ReadBillUseCase;
+use FlexPHP\Bundle\InvoiceBundle\Domain\BillStatus\UseCase\ReadBillStatusUseCase;
+use FlexPHP\Bundle\InvoiceBundle\Domain\BillType\UseCase\ReadBillTypeUseCase;
+use FlexPHP\Bundle\NumerationBundle\Domain\Provider\UseCase\ReadProviderUseCase;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type as InputType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
